@@ -25,7 +25,7 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
     api.getInitialCards()
     .then(res => setCards(res))
     .catch(err => console.log(err));
-  });
+  }, []);
 
   return (
   <main className="main">

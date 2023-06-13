@@ -5,8 +5,8 @@ export default function Card({ card, userId, onCardClick }) {
       }
 
     return (
-        <li className="element" onClick={handleCardClick}>
-            <img className="element__image" src={card.link}/>
+        <li className="element">
+            <img className="element__image" alt={card.name} onClick={handleCardClick} src={card.link}/>
             <button type="button" aria-label="Удалить"
             className={`element__bin button-hover ${userId !== card._id && 'element__bin_unvisible'}`}></button>
             <div className="element__box-like-title">

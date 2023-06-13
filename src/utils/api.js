@@ -1,7 +1,7 @@
 class Api {
-    constructor() {
-        this._baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-66';
-        this._autorizationKey = 'f9a58eab-d2de-4166-9a66-6bc6595d2d82';
+    constructor(options) {
+        this._baseUrl = options.baseUrl;
+        this._headers = options.headers;
       }
 
     _getResponseData(res) {
@@ -10,100 +10,82 @@ class Api {
         }
         return res.json();
     } 
+
+    _request(url, options) {
+        return fetch(url, options).then(this._getResponseData);
+    }
     
     
     getInitialCards() {
-        return fetch(`${this._baseUrl}/cards`, {
-            headers: {
-                authorization: this._autorizationKey
-            }
+        return this._request(`${this._baseUrl}/cards`, {
+            headers: this._headers
         })
-        .then(res => this._getResponseData(res))
     }
 
     getUserInfo() {
-        return fetch(`${this._baseUrl}/users/me`, {
-            headers: {
-                authorization: this._autorizationKey
-            }
+        return this._request(`${this._baseUrl}/users/me`, {
+            headers: this._headers
         })
-        .then(res => this._getResponseData(res))
     }
 
     changeUserInfo(name, about) {
-        return fetch(`${this._baseUrl}/users/me`, {
+        return this._request(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: this._autorizationKey,
-                'Content-Type': 'application/json' 
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: name,
                 about: about
             })
         })
-        .then(res => this._getResponseData(res))
     }
 
     addNewCard(title, link) {
-        return fetch(`${this._baseUrl}/cards`, {
+        return this._request(`${this._baseUrl}/cards`, {
             method: 'POST',
-            headers: {
-                authorization: this._autorizationKey,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: title, 
                 link: link
             })
         })
-        .then(res => this._getResponseData(res))
         }
     
     deleteCard(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}`, {
+        return this._request(`${this._baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: {
-                authorization: this._autorizationKey
-            }
+            headers: this._headers
         })
-        .then(res => this._getResponseData(res))
-
     }
 
     addLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+        return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: {
-                authorization: this._autorizationKey
-            }
+            headers: this._headers
         })
-        .then(res => this._getResponseData(res))
     }
 
     deleteLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+        return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: {
-                authorization: this._autorizationKey
-            }
+            headers: this._headers
         })
-        .then(res => this._getResponseData(res))
     }
 
     changeUserAvatar(link) {
-        return fetch(`${this._baseUrl}/users/me/avatar`, {
+        return this._request(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: {
-                authorization: this._autorizationKey,
-                'Content-Type': 'application/json' 
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 avatar: link
             })
         })
-        .then(res => this._getResponseData(res))
     }
 }
 
-export default Api = new Api();
+export default Api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+    headers: {
+        authorization: 'f9a58eab-d2de-4166-9a66-6bc6595d2d82',
+        'Content-Type': 'application/json'
+    }
+});
