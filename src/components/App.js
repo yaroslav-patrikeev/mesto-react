@@ -42,7 +42,9 @@ function App() {
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+      setCards((state) =>
+        state.map((c) => (c._id === card._id ? newCard : c))
+      ).catch(console.error);
     });
   };
 
@@ -52,10 +54,10 @@ function App() {
       .deleteCard(activeCard._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== activeCard._id));
+        handleCloseAllPopups();
       })
       .catch(console.error)
       .finally(() => {
-        handleCloseAllPopups();
         setIsSubmit(false);
       });
     setIsSubmit(true);
@@ -79,7 +81,6 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsConfirmDeletePopupOpen(false);
-    Array.from(document.forms).forEach((form) => form.reset());
     setSelectedCard({});
   };
 
@@ -88,10 +89,10 @@ function App() {
       .changeUserInfo(name, about)
       .then((res) => {
         setCurrentUser(res);
+        handleCloseAllPopups();
       })
       .catch(console.error)
       .finally(() => {
-        handleCloseAllPopups();
         setIsSubmit(false);
       });
     setIsSubmit(true);
@@ -101,10 +102,10 @@ function App() {
       .changeUserAvatar(avatar)
       .then((res) => {
         setCurrentUser(res);
+        handleCloseAllPopups();
       })
       .catch(console.error)
       .finally(() => {
-        handleCloseAllPopups();
         setIsSubmit(false);
       });
     setIsSubmit(true);
@@ -115,10 +116,10 @@ function App() {
       .addNewCard(title, link)
       .then((res) => {
         setCards([res, ...cards]);
+        handleCloseAllPopups();
       })
       .catch(console.error)
       .finally(() => {
-        handleCloseAllPopups();
         setIsSubmit(false);
       });
     setIsSubmit(true);

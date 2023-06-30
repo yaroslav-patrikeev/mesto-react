@@ -13,8 +13,6 @@ export default function Main({
 }) {
   const currentUserContext = React.useContext(CurrentUserContext);
 
-  let myId;
-
   return (
     <main className="main">
       <section className="profile">
@@ -47,7 +45,6 @@ export default function Main({
           <Card
             key={item._id}
             card={item}
-            userId={myId}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}

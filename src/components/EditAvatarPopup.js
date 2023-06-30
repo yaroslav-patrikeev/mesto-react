@@ -17,6 +17,11 @@ export default function EditAvatarPopup({
     });
   };
 
+  React.useEffect(() => {
+    document.forms["change-avatar"].reset();
+    setIsValid(false);
+  }, [isOpen]);
+
   const handleInputAvatarLink = () => {
     setAvatarError(avatarRef.current.validationMessage);
     changeIsValid();

@@ -28,6 +28,12 @@ export default function AddPlacePopup({
     setLinkError(linkRef.current.validationMessage);
     changeIsValid();
   };
+
+  React.useEffect(() => {
+    document.forms["add-place"].reset();
+    setIsValid(false);
+  }, [isOpen]);
+
   return (
     <PopupWithForm
       title="Новое место"
