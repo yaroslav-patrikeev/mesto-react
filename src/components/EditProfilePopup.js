@@ -26,11 +26,7 @@ export default function EditProfilePopup({
     if (!name || !about) return;
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
-
-  React.useEffect(() => {
-    document.forms["edit-profile"].reset();
-  }, [isOpen]);
+  }, [currentUser, isOpen]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

@@ -30,7 +30,8 @@ export default function AddPlacePopup({
   };
 
   React.useEffect(() => {
-    document.forms["add-place"].reset();
+    titleRef.current.value = "";
+    linkRef.current.value = "";
     setIsValid(false);
   }, [isOpen]);
 

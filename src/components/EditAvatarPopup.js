@@ -18,7 +18,7 @@ export default function EditAvatarPopup({
   };
 
   React.useEffect(() => {
-    document.forms["change-avatar"].reset();
+    avatarRef.current.value = "";
     setIsValid(false);
   }, [isOpen]);
 
